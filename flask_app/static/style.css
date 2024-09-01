@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.subhead, .navLink {
+    display: flex;
+    display: inline-flex;    
+}
+.container1 {
+    margin-right: 100px;
+}
+.text, .location, .date  {
+    margin-inline: auto;
+}
+#wrapper {
+    background-color: rgb(89, 172, 239);   
+}
+html, body {
+    background-color: rgb(89, 172, 239);
+    background-image: url('fitness.jpg');    
+}
+body {
+    background-image: url('fitness.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.subhead1 {
+    display: contents;
+    justify-content: center;
+}
+.navLink1 {
+    margin-left: 400px;
+}
+.image {
+    height: 250px;
+    width: 100%;
+}
+label {
+    width: 150px;
+    display: inline-block;
+    border-radius: 5px;
+     
+}
+form {
+    margin-inline: 20px;
+}
+textarea:is(:focus, :valid) {
+    border-radius: 10px;
+   
+    
+} 
+.textarea {
+    margin: auto;
+    
+    margin-top: 10px;
+}   
+button {   
+    background-color: rgb(135, 90, 8); 
+    box-shadow: 4px 4px black;
+    width: 80px;
+    border: 2px solid rgb(7, 7, 7);
+    z-index: 1;
+    border-radius: 100em;   
+}
+.flash {
+    text-decoration-color: blue;
+    
+}
+.form_data {
+    text-decoration-color: blue;
+    
+}
+
+
+
+
+
+
