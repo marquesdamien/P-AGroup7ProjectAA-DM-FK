@@ -8,43 +8,41 @@
     <title>Workout Log</title>
     
 </head>
-
 <body>
     <img src=/static/images/fitness.jpg alt=static/images/fitness.jpg class=image>
-    
-    <div id="wrapper">          
+    <div id="wrapper">
+        
         <div class="div">
-            <h1 class="subhead1 mb-3 d-flex justify-content-center">Workout Log</h1>
+            <h1 class="subhead1 mb-5 d-flex justify-content-center">Workout Log</h1>
         </div>
-        <p class="subhead mb-3 d-flex justify-content-center">What did you train today?</p>
-        <div class="div  mb-3 d-flex justify-content-center">
-        <a href="/workout/dashboard" class="navLink">Dashboard</a>||   
-        <a href="/users/logout" class="navLink">Logout</a>
-        </div>     
+        <p class="subhead mb-5 d-flex justify-content-center">Edit Your Workout</p>
+        
+        <div class="div  mb-5 d-flex justify-content-center">
+            <a href="/workout/dashboard" class="navLink">Dashboard</a>||  
+            <a href="/users/logout" class="navLink">Logout</a>
+        </div>
         <div id="bodyDiv">
-            <div class="container mb-3 d-flex justify-content-center">
+            <div class="container mb-5 d-flex justify-content-center">
                  
                 <div class="container1">
-                    <form action="/workout/create" method='post' class="inputForm"> 
+
+                    <form action="/workout/update/{{ workout.id }}" method='post' class="inputForm"> 
                         <div class="form-group mb-3">
                             <label for='workout_type'>Workout Type</label>                        
                             <select id="workout" name="workout">
-                                <option value="">--select a workout</option>
-                                <option value="Upper Body">Upper Body</option>
-                                <option value="Lower Body">Lower Body</option>
-                                <option value="Full Body">Full Body</option>
-                                <option value="Cardio">Cardio</option>                                 
+                                <option>value="{{ workout.workout_type }}"</option> 
                             </select>
                             <div class="form-group mb-3">
                                 <label for='detail'>Details</label>
+                                <textarea type='text' id='detail' name='detail'> {{ workout.workout }}</textarea>
                                 <textarea name='detail' id='detail'></textarea>                  
                             </div>
-                            <button >Add My Workout</button>                                      
-                    </form>                    
-                </div>       
+                            <button >Update My Workout</button>                                      
+                    </form>     
+                </div>            
                     <div>
                         {% with messages = get_flashed_messages(category_filter=
-                        ['workout']) %}
+                        ['report']) %}
                             {% if messages %}
                                 {% for message in messages %}
                                     <p class="error">{{ message }}</p>
