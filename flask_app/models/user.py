@@ -1,6 +1,11 @@
+from flask_app import app
 from flask_app.config.mysqlconnection import connect
-from flask import flash   # type: ignore
+from flask import flash, session   
+
 import re
+from flask_bcrypt import Bcrypt
+bcrypt = Bcrypt(app)
+
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')        
 PASSWOED_REGEX = re.compile(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$") 
 
@@ -95,5 +100,14 @@ class User:
         """
         user_id = connect(cls.DB).query_db(query, form_data)
         return user_id
-
     
+    @classmethod
+    def login(cls, data):
+        this_user = cls.get_by_email(data['email'])
+        if this_user:
+            if bcrypt.check_password_hash(this_user.password, data['password']):
+                session['user_id'] = this_user.user_id
+                session['user_name'] = f'{this_user.first_name} {this_user.last_name}'
+                return True
+        flash('Your login information was incorrect')
+        return False
