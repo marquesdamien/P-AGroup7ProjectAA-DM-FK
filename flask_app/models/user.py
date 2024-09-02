@@ -12,7 +12,6 @@ PASSWOED_REGEX = re.compile(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Z
 
 class User:
     DB = 'workout_tracker'
-
     def __init__(self, data):
         self.id = data['user_id']
         self.first_name = data['first_name']
@@ -106,7 +105,7 @@ class User:
         this_user = cls.get_by_email(data['email'])
         if this_user:
             if bcrypt.check_password_hash(this_user.password, data['password']):
-                session['user_id'] = this_user.user_id
+                session['user_id'] = this_user.id
                 session['user_name'] = f'{this_user.first_name} {this_user.last_name}'
                 return True
         flash('Your login information was incorrect')
