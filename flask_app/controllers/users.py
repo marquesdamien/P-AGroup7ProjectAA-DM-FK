@@ -39,3 +39,12 @@ def login():
 def clear_session():
     session.clear   
     return redirect('/')
+
+@app.route('/report/dashboard')
+def dashboard():
+    if 'user_id' not in session:
+        flash('Please log in first', 'dashboard')
+        return redirect('/')
+    user_id = session['user_id']
+    user = User.get_by_id(user_id)
+    return render_template('dashboard.html', user=user)

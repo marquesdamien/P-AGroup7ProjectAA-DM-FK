@@ -14,7 +14,7 @@ class User:
     DB = 'workout_tracker'
 
     def __init__(self, data):
-        self.id = data['id']
+        self.id = data['user_id']
         self.first_name = data['first_name']
         self.last_name = data['last_name']
         self.email = data['email']
@@ -31,7 +31,7 @@ class User:
         data = {'id': user_id}
         results = connect(cls.DB).query_db(query, data)
         print(results)
-        return cls(results[0])
+        return cls(results[0]) if results else None
         
     @staticmethod
     def validator(form_data):
