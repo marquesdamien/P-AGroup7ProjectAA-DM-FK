@@ -13,7 +13,7 @@ PASSWOED_REGEX = re.compile(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Z
 class User:
     DB = 'workout_tracker'
     def __init__(self, data):
-        self.id = data['user_id']
+        self.user_id = data['user_id']
         self.first_name = data['first_name']
         self.last_name = data['last_name']
         self.email = data['email']
@@ -25,9 +25,9 @@ class User:
     def get_by_id(cls, user_id):
         query = """
         SELECT * FROM users
-        WHERE id = %(id)s
+        WHERE user_id = %(user_id)s
         """
-        data = {'id': user_id}
+        data = {'user_id': user_id}
         results = connect(cls.DB).query_db(query, data)
         print(results)
         return cls(results[0]) if results else None
@@ -77,6 +77,7 @@ class User:
             flash('Passwords Must Match', 'registration')
         
         return is_valid
+    
     @classmethod
     def get_by_email(cls, data):
         query = """
@@ -89,6 +90,7 @@ class User:
             return False
         
         return cls(results[0])
+    
     @classmethod
     def create(cls, form_data):
         print(f"model: {form_data}")
@@ -105,7 +107,7 @@ class User:
         this_user = cls.get_by_email(data['email'])
         if this_user:
             if bcrypt.check_password_hash(this_user.password, data['password']):
-                session['user_id'] = this_user.id
+                session['user_id'] = this_user.user_id
                 session['user_name'] = f'{this_user.first_name} {this_user.last_name}'
                 return True
         flash('Your login information was incorrect')

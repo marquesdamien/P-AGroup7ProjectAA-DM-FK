@@ -16,24 +16,32 @@ def add_workout():
         return redirect('/')
 
     workout_type = request.form.get('workout')
-    details = request.form.get('detail')
+    workout_details = request.form.get('workout_detail')
+    workout_date = request.form.get('workout_date')
+    workout_name = request.form.get('workout_name')
 
     if not workout_type:
         flash('Workout type is required', 'workout')
         return redirect('/workout/new')
     
-    if not details:
-        flash('Details are required', 'workout')
+    if not workout_date:
+        flash('Workout date is required', 'workout')
         return redirect('/workout/new')
-
-    if len(details) < 20:
+    
+    if len(workout_name) < 5:
+        flash('Details must be at least 5 characters long', 'workout')
+        return redirect('/workout/new')
+    
+    if len(workout_details) < 20:
         flash('Details must be at least 20 characters long', 'workout')
         return redirect('/workout/new')
 
     workout_data = {
+        'workout_date': workout_date,
         'workout_type': workout_type,
-        'details': details,
-        'user_id': session['user_id']
+        'workout_details': workout_details,
+        'workout_name': workout_name,
+        'user_id': session['user_id'],
     }
     Workout.create(workout_data)
 

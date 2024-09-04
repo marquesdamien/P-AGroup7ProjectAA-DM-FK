@@ -29,7 +29,7 @@ def login():
     user_in_db = User.get_by_email({"email" : request.form["email"] })
     if user_in_db:
         if bcrypt.check_password_hash(user_in_db.password, request.form['password']):       
-            session['user_id'] = user_in_db.id
+            session['user_id'] = user_in_db.user_id
             session['user_name'] = f"{user_in_db.first_name} {user_in_db.last_name}"
             return redirect('/report/dashboard')       
     flash("Invalid Credentials", 'login')

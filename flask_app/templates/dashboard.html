@@ -23,23 +23,28 @@
                     <table class="table table-striped table-hover mb-3">             
                         <thead>
                             <tr>
-                                <th>Workout Type</th>
+                                <th>Workout Name</th>
                                 <th>Posted By</th>  
-                                <th>Options</th>                          
+                                <th>Workout Type</th>
+                                <th>Workout Date</th>                          
+                                <th>Workout Details</th>
+                                <th>Options</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for workout in Workouts %}
+                            {% for workout in workouts: %}
                             <tr>
-                                <td>{{ workout.workout_type }}
-                                <td>{{ workout.posted_by }}</td>
-                                <td>{{ workout.workout_opton }}
+                                <td>{{ workout.workout_name }}</td>
+                                <td>{{ workout.creator.first_name }}</td>
+                                <td>{{ workout.workout_type }}</td>
+                                <td>
+                                    <a href="/workout/view/{{ workout.workout_id }}" class="navLink">view</a>|
                                     {% if workout.user_id == session['user_id'] %}    
-                                    <a href="/workout/view/{{ workout.id }}" class="navLink">view</a>|                           
-                                    <a href="/workout/edit/{{ workout.id }}" class="navLink">Edit</a>| 
-                                    <a href="/workout/delete/{{ workout.id }}" class="navLink">delete</a></td> 
+                                    <a href="/workout/edit/{{ workout.workout_id }}" class="navLink">Edit</a>| 
+                                    <a href="/workout/delete/{{ workout.workout_id }}" class="navLink">delete</a>
                                     {% endif %}                                                                                                              
-                            </tr>
+                                </td>
+                                </tr>
                             {% endfor %}                        
                         </tbody>                   
                 </table>

@@ -41,14 +41,14 @@ CREATE TABLE IF NOT EXISTS `workout_tracker`.`workouts` (
   `workout_type` VARCHAR(45) NOT NULL,
   `workout_details` VARCHAR(255) NOT NULL,
   `workout_name` VARCHAR(60) NOT NULL,
-  `creator_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
   `updated_at` DATETIME NOT NULL DEFAULT NOW() ON UPDATE NOW(),
-  PRIMARY KEY (`workout_id`, `creator_id`),
+  PRIMARY KEY (`workout_id`, `user_id`),
   UNIQUE INDEX `workout_id_UNIQUE` (`workout_id` ASC) VISIBLE,
-  INDEX `fk_workouts_users_idx` (`creator_id` ASC) VISIBLE,
+  INDEX `fk_workouts_users_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_workouts_users`
-    FOREIGN KEY (`creator_id`)
+    FOREIGN KEY (`user_id`)
     REFERENCES `workout_tracker`.`users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
