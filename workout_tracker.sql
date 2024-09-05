@@ -7,7 +7,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema workout_tracker
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `workout_tracker` ;
 
 -- -----------------------------------------------------
 -- Schema workout_tracker
@@ -44,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `workout_tracker`.`workouts` (
   `user_id` INT NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT NOW(),
   `updated_at` DATETIME NOT NULL DEFAULT NOW() ON UPDATE NOW(),
-  PRIMARY KEY (`workout_id`, `user_id`),
+  PRIMARY KEY (`workout_id`),
   UNIQUE INDEX `workout_id_UNIQUE` (`workout_id` ASC) VISIBLE,
   INDEX `fk_workouts_users_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_workouts_users`

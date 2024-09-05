@@ -16,7 +16,7 @@ def add_workout():
         return redirect('/')
 
     workout_type = request.form.get('workout')
-    workout_details = request.form.get('workout_detail')
+    workout_details = request.form.get('workout_details')
     workout_date = request.form.get('workout_date')
     workout_name = request.form.get('workout_name')
 
@@ -32,7 +32,7 @@ def add_workout():
         flash('Details must be at least 5 characters long', 'workout')
         return redirect('/workout/new')
     
-    if len(workout_details) < 20:
+    if len(workout_details) < 10:
         flash('Details must be at least 20 characters long', 'workout')
         return redirect('/workout/new')
 
@@ -47,3 +47,28 @@ def add_workout():
 
     flash('Your workout has been added.', 'workout')
     return redirect('/report/dashboard')
+
+
+@app.get('/workout/edit/<workout_id>')
+def edit_page(workout_id):
+    if "user_id" not in session:
+        flash("You must be logged in to access this page")
+        return redirect('/')
+    print("in Edit page:" , workout_id)
+    workout_viewed = Workout.get_one_by_workout_id(workout_id)
+    if session['user_id'] != workout_viewed.user_id:
+        flash("You do not have access to Another Users Workouts")
+        return redirect('/')
+    return render_template('edit_workout.html', workout = workout_viewed)
+
+@app.route('/workout/update', methods=['POST'])
+def edit_workout():
+    if 'user_id' not in session:
+        flash('Please login first', 'error')
+        return redirect('/')
+    is_valid = Workout.validate_workout_data(request.form)
+    if Workout.update(request.form):
+        return redirect('/report/dashboard')
+    print(request.form)
+    print(is_valid)
+    return redirect(f'/shows/edit/{request.form["workout_id"]}')

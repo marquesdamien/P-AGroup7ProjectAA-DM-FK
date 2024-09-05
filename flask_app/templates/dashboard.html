@@ -24,8 +24,6 @@
                                 <th>Workout Name</th>
                                 <th>Posted By</th>  
                                 <th>Workout Type</th>
-                                <th>Workout Date</th>                          
-                                <th>Workout Details</th>
                                 <th>Options</th>
                             </tr>
                         </thead>
@@ -36,10 +34,10 @@
                                 <td>{{ workout.creator.first_name }}</td>
                                 <td>{{ workout.workout_type }}</td>
                                 <td>
-                                    <a href="/workout/view/{{ workout.workout_id }}" class="navLink">view</a>|
+                                    <a href="/workout/view/{{ workout.workout_id }}" class="navLink">View</a>
                                     {% if workout.user_id == session['user_id'] %}    
-                                    <a href="/workout/edit/{{ workout.workout_id }}" class="navLink">Edit</a>| 
-                                    <a href="/workout/delete/{{ workout.workout_id }}" class="navLink">delete</a>
+                                    | <a href="/workout/edit/{{ workout.workout_id }}" class="navLink">Edit</a>| 
+                                    <a href="/workout/delete/{{ workout.workout_id }}" class="navLink">Delete</a>
                                     {% endif %}                                                                                                              
                                 </td>
                                 </tr>

@@ -1,6 +1,6 @@
 from flask_app.config.mysqlconnection import connect
 from flask_app.models import user
-
+from flask import flash
 
 
 
@@ -21,6 +21,23 @@ class Workout:
         self.creator = None
 
 
+    @classmethod
+    def validate_workout_data(cls, data):
+        is_valid = True # we assume this is true
+        if len(data['workout_name']) < 5:
+            flash("Workout Name must be at least 3 characters.")
+            is_valid = False
+        if len(data['workout_details']) < 10:
+            flash("Workout Details must be at least 10 characters.")
+            is_valid = False
+        if not data['workout_date']:
+            flash('workout date is required')
+            is_valid = False
+        if not data['workout_type']:
+            flash('Workout Type required')
+            is_valid = False
+        return is_valid
+    
     @classmethod
     def create(cls, data):
         query = """
@@ -82,6 +99,25 @@ class Workout:
 
         return workout_obj
     
+
+    @classmethod
+    def update(cls, data):
+        if not cls.validate_workout_data(data):
+            return False
+        query = """
+        UPDATE workouts
+        SET
+            workout_date = %(workout_date)s,
+            workout_type = %(workout_type)s,
+            workout_details = %(workout_details)s,
+            workout_name = %(workout_name)s
+        WHERE workout_id = %(workout_id)s
+        ;"""
+        connect(cls.DB).query_db(query, data)
+        print(query)
+        return True
+    
+
     @classmethod
     def delete_workout(cls, workout_id):
         data = {
