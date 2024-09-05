@@ -32,7 +32,7 @@ def login():
         if bcrypt.check_password_hash(user_in_db.password, request.form['password']):       
             session['user_id'] = user_in_db.user_id
             session['user_name'] = f"{user_in_db.first_name} {user_in_db.last_name}"
-            return redirect('/report/dashboard')       
+            return redirect('/workout/dashboard')       
     flash("Invalid Credentials", 'login')
     return redirect("/")
 
@@ -41,7 +41,7 @@ def clear_session():
     session.clear   
     return redirect('/')
 
-@app.route('/report/dashboard')
+@app.route('/workout/dashboard')
 def dashboard():
     if 'user_id' not in session:
         flash('Please log in first', 'dashboard')
