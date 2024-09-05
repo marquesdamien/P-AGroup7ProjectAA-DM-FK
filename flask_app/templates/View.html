@@ -18,15 +18,16 @@
         <p>Workout Log</p>
         </div>
         
-        <p class="subhead">{{ workout.creator.first_name }} {{ workout.creator.last_name }} Workout</p>
+        <p class="subhead">{{ workout.creator.first_name }}'s Workout</p>
         
         <a href="/report/dashboard" class="navLink">Dashboard</a>||
         <a href="/users/logout" class="navLink">Logout</a>
         
         <div id="displaywrapper">
-                <p>Workout Type: {{ workout.workout_type }} </p>
-                <p>Posted on: {{ workout.workout_date }} </p>
-                <p>Detail: {{ workout.workout_details }}</p>               
+                <p><strong>Posted By:</strong> {{ workout.creator.first_name }} {{ workout.creator.last_name }}</p>
+                <p><strong>Workout Type:</strong> {{ workout.workout_type }} </p>
+                <p><strong>Posted On:</strong> {{ workout.workout_date }} </p>
+                <p><strong>Details:</strong> {{ workout.workout_details }}</p>               
         </div>     
     </div>
 </body>

@@ -72,3 +72,25 @@ def edit_workout():
     print(request.form)
     print(is_valid)
     return redirect(f'/shows/edit/{request.form["workout_id"]}')
+
+@app.route('/workout/delete/<workout_id>')
+def delete_workout(workout_id):
+    if 'user_id' not in session:
+        flash('Please login first', 'error')
+        return redirect('/')
+    workout = Workout.get_one_by_workout_id(workout_id)
+    if workout and workout.user_id == session['user_id']:
+        Workout.delete_workout(workout_id)
+        flash('Workout deleted.', 'success')
+    return redirect('/report/dashboard')
+
+@app.route('/workout/view/<int:workout_id>')
+def view_workout(workout_id):
+    if 'user_id' not in session:
+        flash('Please login first', 'error')
+        return redirect('/')
+    workout = Workout.get_one_by_workout_id(workout_id)
+    if workout and workout.user_id == session['user_id']:
+        return render_template('view.html', workout=workout)
+    return redirect('/report/dashboard')
+
