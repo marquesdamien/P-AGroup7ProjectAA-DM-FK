@@ -46,7 +46,7 @@ def add_workout():
     Workout.create(workout_data)
 
     flash('Your workout has been added.', 'workout')
-    return redirect('/report/dashboard')
+    return redirect('/workout/dashboard')
 
 
 @app.get('/workout/edit/<workout_id>')
@@ -68,7 +68,7 @@ def edit_workout():
         return redirect('/')
     is_valid = Workout.validate_workout_data(request.form)
     if Workout.update(request.form):
-        return redirect('/report/dashboard')
+        return redirect('/workout/dashboard')
     print(request.form)
     print(is_valid)
     return redirect(f'/shows/edit/{request.form["workout_id"]}')
@@ -82,7 +82,7 @@ def delete_workout(workout_id):
     if workout and workout.user_id == session['user_id']:
         Workout.delete_workout(workout_id)
         flash('Workout deleted.', 'success')
-    return redirect('/report/dashboard')
+    return redirect('/workout/dashboard')
 
 @app.route('/workout/view/<int:workout_id>')
 def view_workout(workout_id):
@@ -92,5 +92,5 @@ def view_workout(workout_id):
     workout = Workout.get_one_by_workout_id(workout_id)
     if workout and workout.user_id == session['user_id']:
         return render_template('view.html', workout=workout)
-    return redirect('/report/dashboard')
+    return redirect('/workout/dashboard')
 
